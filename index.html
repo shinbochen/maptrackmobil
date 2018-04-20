@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd"> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>::MapTrack System|mobile version:: </title>
+<style type="text/css">
+*{ margin:0; padding:0}
+#b{border:2px solid #ccc;border-radius:3px;width:150px; height:24px;color:#333; padding-left:5px;font:12px Microsoft YaHei,tahoma,arial,sans-serif;}
+span{text-shadow: 0 2px 0 rgba(255, 255, 255, 0.5); color:#333;  font-size: 9pt; font-family: Arial;}
+</style>
+</head>
+
+<body style="background:url(light.gif) no-repeat center top #999; font:13px Microsoft YaHei,tahoma,arial,sans-serif; color:#333; text-align:left">
+ 
+<center>
+<div style="width:240px; margin:0 auto">  
+
+<h2 align="right">::Google Map::</h1>  
+<div align="right" id="query">  
+<form action="tracker.asp" method="post">
+<input type='hidden' name='maptype' value='hybrid'/>
+<input type='hidden' name='wt' value='600'/>
+<input type='hidden' name='ht' value='800'/>
+<span>Longitude: </span><input type="text" name="lng" id="b" value="113.87105"><br />
+<span>Latitude: </span><input type="text" name="lat" value="22.59327" id="b" style="margin-top:10px"><br />
+<input type="submit" value="Query" style="background-color: #555; color: #FFFFFF; height:30px; width: 240px; font-weight: bold; border-radius: 3px; cursor: pointer; font-variant: normal; font-size: 12pt; font-family: Arial; border: 1px dashed #666666; margin-top: 10px; background-position: 0% 50%"/>
+</form>
+</div>  
+
+<h2 align="right">::Online Control::</h1>  
+<div align="right" id="login">	  
+<form method="post" action="index.asp"><br/>
+<input type='hidden' name='maptype' value='hybrid'></input>
+<input type='hidden' name='wt' value='600'></input>
+<input type='hidden' name='ht' value='800'></input>
+<input type='hidden' name='zone' value='-480'></input>
+<span>User：</span><input type="text" id="b" name="LoginUser" onblur="if(this.value=='')this.value='User'" onfocus="if(this.value=='User')this.value=''" value="User"><br /><span>Password：</span><input id="b" type="password" name="LoginPsd" onblur="if(this.value=='')this.value='password'" onfocus="if(this.value=='password')this.value=''" value="password" style="margin-top:10px"><br />
+<input type="submit" value="Login"  style="background-color: #555; color: #FFFFFF; height: 30px; width: 240px; font-weight: bold; border-radius: 3px; cursor: pointer; font-variant: normal; font-size: 12pt; font-family: Arial; border: 1px dashed #666666; margin-top: 10px; background-position: 0% 50%"></input>
+</form>
+</div>
+
+<div style="font-size:7pt; color:#666; font-family: Arial; font-style:italic"  align="right">  
+	MapTrack Mobile Version. All Right Reserved
+</div>
+</center>
+
+<script>
+
+var d = new Date();
+
+//alert( d.getTimezoneOffset() );
+
+var form1 = document.forms[0];
+//form1.wt.value = screen.width;
+//form1.ht.value = screen.height;
+
+var form2 = document.forms[1];
+//form2.wt.value = screen.width;
+//form2.ht.value = screen.height;
+form2.zone.value = d.getTimezoneOffset();
+
+//alert( screen.width +'x'+ screen.height );
+//alert( document.body.clientWidth + 'x' + document.body.clientHeight );
+//alert( d.getTimezoneOffset() );
+
+
+</script>
+
+</div>  
+</body>  

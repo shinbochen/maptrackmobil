@@ -1,0 +1,27 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>zoominzoomout</title>
+</head>
+
+<body>
+
+
+<div style="left:0px;top:0px;height:320px;width:240px;position:absolute;zIndex:1;background-image: url(http://maps.google.com/staticmap?center=<%=lat%>,<%=lng%>&zoom=<%=lvl%>&size=240x320&markers=<%=lat%>,<%=lng%>,red&key=ABQIAAAAzXeux4S-aWOAMJfiRzTHeBTFnBLixAe4YRBR1rVsSZRky74h3BQml51R-e_Ee8M6Tvd9b4NZTBQ-YQ);background-repeat: no-repeat;">
+<form method="POST">
+	Vehicle List:<select size="1" name="D1" >
+	<option>233</option>
+	<option>343434</option>
+	</select><br />
+	<input type="radio" name="CMD" value="1" onclick ="this.submit()"><img src="image\DisableOil.gif">
+	<input type="radio" name="CMD" value="2"><img src="image\EnableOil.gif">
+	<input type="radio" name="CMD" value="3"><img src="image\TrackOnce.gif">
+	<input type="submit" value="ok">
+</form>
+<a href='tracker.asp?lat=<%=lat%>&lng=<%=lng%>&lvl=<%=lvl+1%>&key=<%=key%>'><img src="image\zoomin.gif" border = 0></a><br />
+<a href='tracker.asp?lat=<%=lat%>&lng=<%=lng%>&lvl=<%=lvl-1%>&key=<%=key%>'><img src="image\zoomout.gif" border = 0></a>
+</div>
+</body>
+
+</html>

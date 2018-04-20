@@ -1,0 +1,212 @@
+﻿<html> 
+<head> 
+<title>MapTrack</title>
+</head> 
+<body> 
+ <div style="width: 100%; height: 16px; font-family: Arial; font-size: 9; text-align:right"> 
+ <a href='#' onclick="javascript:changeMapType(0)">roadmap</a> &nbsp;&nbsp;
+ <a href='#' onclick="javascript:changeMapType(1)">mobile</a> &nbsp;&nbsp;
+ <a href='#' onclick="javascript:changeMapType(2)">satellite</a> &nbsp;&nbsp;
+ <a href='#' onclick="javascript:changeMapType(3)">hybrid</a> &nbsp;&nbsp;
+ </div>
+ 
+ <div style="width: 50px; height: 200px; font-family: Arial; font-size: 9;"> 
+ <a href='#' onclick="javascript:zoomIn()"><img src="zoomin.gif" border="0" alt='zoomIn'/></a><br/>
+ <a href='#' onclick="javascript:zoomOut()"><img src="zoomout.gif" border="0" alt='zoomOut'/></a><br/>
+ <a href='#' onclick="javascript:changeMapSize(0)">240x320</a><br/>
+ <a href='#' onclick="javascript:changeMapSize(1)">280x320</a><br/>
+ <a href='#' onclick="javascript:changeMapSize(2)">480x800</a><br/>
+ </div>
+ 
+</body> 
+
+<script type="text/javascript">
+
+    var maptype = [
+	"roadmap",
+	"mobile",
+	"satellite",
+	"terrain",
+	"hybrid"]
+
+    var mapsize = [
+	'240x320',
+	'280x320',
+	'480x800'
+	];
+
+    var google = "http://maps.google.com/maps/api/staticmap?";
+    //var google = " http://ditu.google.cn/staticmap?";
+    var global = {
+        center: { lat: 30.56, lng: 113.268 },
+        zoom: 12,
+        size: '240x320',
+        maptype: 'roadmap',
+        key: 'ABQIAAAAx095nOTakYV7ihH2092smRQsoh-0mNYKaSjvqdwy3y4dKdIQvRSEzWbC-iucfioe_f-M9d_BctxuNA',
+        sensor: 'false'
+    }
+    var arrData = new Array();
+	// ditu.google.cn生成方式
+    /*function update() {
+        var para = "";
+
+
+        for (key in global) {
+            if (para.length > 0) {
+                para += '&';
+            }
+
+            if (key == 'center') {
+                para += 'center=' + global.center.lat + ',' + global.center.lng;
+            }
+            else {
+                para += key + '=' + global[key];
+            }
+        }
+
+        var markers = "";
+        for (var i = 0; i < arrData.length; i++) {
+            if (markers.length > 0) {
+                markers += '%7C';
+            }
+
+            markers += arrData[i].lat + ',' + arrData[i].lng + ',';
+            if (arrData[i].alarm > 0) {
+                markers += 'red';
+            }
+            else if (arrData[i].speed >= 20) {
+                markers += 'green';
+            }
+            else {
+                markers += 'black';
+            }
+
+            markers += arrData[i].name.toLowerCase().charAt(0);
+        }
+        if (markers.length > 0) {
+            para += '&markers=' + markers;
+        }
+
+        var url = 'url(' + google + para + ')';
+        //alert( url );
+        document.body.style.backgroundImage = url;
+    }*/
+	// maps.google.com生成方式
+	function update() {
+        var para = "";
+
+
+        for (key in global) {
+            if (para.length > 0) {
+                para += '&';
+            }
+
+            if (key == 'center') {
+                para += 'center=' + global.center.lat + ',' + global.center.lng;
+            }
+            else {
+                para += key + '=' + global[key];
+            }
+        }
+
+        var markers = "";
+        for (var i = 0; i < arrData.length; i++) {
+        	   var color= "";
+        	   var label = "";
+            if (markers.length > 0) {
+                markers += '&';
+            }
+            
+            if (arrData[i].alarm > 0) {
+            	color = "red";
+            }
+            else if (arrData[i].speed >= 20) {
+            	color = "green";
+            }
+            else {
+			color	= "black";
+            }
+            label = arrData[i].name.toUpperCase().charAt(0);
+
+		   markers += 'markers=color:'+color+'|label:'+label+'|'+arrData[i].lat + ',' + arrData[i].lng 
+        }
+        if (markers.length > 0) {
+            para += '&' + markers;
+        }
+
+        var url = 'url(' + google + para + ')';
+        //alert( url );
+        document.body.style.backgroundImage = url;
+    }
+
+
+    function addMarker(obj) {
+        var flag = false;
+
+        for (var i = 0; i < arrData.length; i++) {
+            if (arrData[i].name == obj.name) {
+
+                global.center.lat = obj.lat;
+                global.center.lng = obj.lng;
+                arrData[i].name = obj.name;
+                arrData[i].lng = obj.lng;
+                arrData[i].lat = obj.lat;
+                arrData[i].speed = obj.speed;
+                arrData[i].alarm = obj.alarm;
+                flag = true;
+                break;
+            }
+        }
+        if (flag == false) {
+            global.center.lat = obj.lat;
+            global.center.lng = obj.lng;
+            arrData.push({
+                name: obj.name,
+                lng: obj.lng,
+                lat: obj.lat,
+                speed: obj.speed,
+                alarm: obj.alarm
+
+            })
+        }
+        update();
+    }
+    function zoomIn() {
+        if (global.zoom < 25) {
+            global.zoom += 1;
+        }
+        alert('zoomIn');
+        update();
+    }
+    function zoomOut() {
+        if (global.zoom > 0) {
+            global.zoom -= 1;
+        }
+        update();
+    }
+    function changeMapType(type) {
+        if (type > maptype.length) {
+            type = 1;
+        }
+        global.maptype = maptype[type];
+        update();
+    }
+    function changeMapSize(size) {
+        if (size > mapsize.length) {
+            size = 0;
+        }
+        global.size = mapsize[size];
+        update();
+    }
+    // test
+    addMarker({
+        name: 'TrackEarth',
+        lng: 113.85547,
+        lat: 22.573008,
+        speed: 0,
+        alarm: 0
+    });
+
+</script> 
+
+</html>
